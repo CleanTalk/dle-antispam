@@ -1,0 +1,349 @@
+= Установка =
+
+1) Сделайте бекап файлов DLE и его БД через Панель управления Вашего хостинга.
+
+2) Если в Вашей версии DLE не установлен модуль CleanTalk, то Вам необходимо распаковать архив с модулем в корень сайта, и перейти по ссылке admin.php?mod=cleantalk&install и следовать инструкциям мастера установки. Модуль установлен.
+
+
+3) Обновлении версии 1.3.3.
+Если у Вас установлена версия модуля Cleantalk Spam Protect 1.3.3, то Вам необходимо ее удалить:
+1. На странице настроек admin.php?mod=cleantalk перейти по ссылке "удалить модуль" (ссылка справа внизу).
+2. Вручную убрать внесенные изменения в скрипты DLE:
+
+
+
+***** Редактировать файл -  engine/modules/addcomments.php
+
+После
+$_SESSION['sec_code_session'] = 0;
+
+Удалить строки
+// Begin: cleantalk.ru
+require_once ENGINE_DIR . '/modules/cleantalk/addcomments.php';
+// End: cleantalk.ru
+
+
+
+Строки
+// Begin: cleantalk.ru
+require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
+list($ct_config, $ct_config_serialized) = ct_get_config($db);
+
+if ($ct_config['ct_enable_mod']) {
+if( $is_logged ) $db->query( "INSERT INTO " . PREFIX . "_comments (post_id, user_id, date, autor, email, text, ip, is_register, approve, ct_request_id) values ('$post_id', '$member_id[user_id]', '$time', '$name', '$mail', '$comments', '$_IP', '1', '$where_approve', '$ct_request_id')" );
+			else $db->query( "INSERT INTO " . PREFIX . "_comments (post_id, date, autor, email, text, ip, is_register, approve, ct_request_id) values ('$post_id', '$time', '$name', '$mail', '$comments', '$_IP', '0', '$where_approve', '$ct_request_id')" );
+} else {
+if( $is_logged ) $db->query( "INSERT INTO " . PREFIX . "_comments (post_id, user_id, date, autor, email, text, ip, is_register, approve) values ('$post_id', '$member_id[user_id]', '$time', '$name', '$mail', '$comments', '$_IP', '1', '$where_approve')" );
+			else $db->query( "INSERT INTO " . PREFIX . "_comments (post_id, date, autor, email, text, ip, is_register, approve) values ('$post_id', '$time', '$name', '$mail', '$comments', '$_IP', '0', '$where_approve')" );
+}
+// End: cleantalk.ru
+
+
+Заменить на
+if( $is_logged ) $db->query( "INSERT INTO " . PREFIX . "_comments (post_id, user_id, date, autor, email, text, ip, is_register, approve) values ('$post_id', '$member_id[user_id]', '$time', '$name', '$mail', '$comments', '$_IP', '1', '$where_approve')" );
+			else $db->query( "INSERT INTO " . PREFIX . "_comments (post_id, date, autor, email, text, ip, is_register, approve) values ('$post_id', '$time', '$name', '$mail', '$comments', '$_IP', '0', '$where_approve')" );
+
+
+
+
+
+
+
+
+***** Редактировать файл - engine/modules/register.php
+
+После
+$reg_error = check_reg( $name, $email, $password1, $password2, $sec_code, $sec_code_session );
+
+Удалить строки
+// Begin: cleantalk.ru
+require_once ENGINE_DIR . '/modules/cleantalk/register.php';
+// End: cleantalk.ru
+
+
+
+После
+if( $doaction == "validating" AND !$stopregistration AND !$_POST['submit_val'] ) {
+
+Удалить строки
+// Begin: cleantalk.ru
+require_once ENGINE_DIR . '/modules/cleantalk/register_validating.php';
+// End: cleantalk.ru
+
+
+
+После
+$reg_error = check_reg( $name, $email, $regpassword, $regpassword );
+
+Добавить
+// Begin: cleantalk.ru
+require_once ENGINE_DIR . '/modules/cleantalk/register.php';
+// End: cleantalk.ru
+
+
+
+После строки:
+<input name=\"submit_reg\" type=\"hidden\" id=\"submit_reg\" value=\"submit_reg\" />
+
+Удалить:
+<input type=\"hidden\" name=\"ct_checkjs\" id=\"ct_checkjs\" value=\"0\" />
+
+
+
+Перед строками
+$tpl->copy_template .= <<<HTML
+<script language='javascript' type="text/javascript">
+<!--
+function reload () {
+
+Удалить строки
+// Begin: cleantalk.ru
+require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
+$ct_lang = get_ct_lang();
+list($ct_config, $ct_config_serialized) = ct_get_config($db);
+if ($ct_config['ct_enable_mod']) {
+$ct_partner_id = (int)$ct_config['ct_partner_id'];
+if ($ct_config['ct_show_partner_link'] == 1 && !empty($ct_partner_id)) {
+$tpl->copy_template .= '<br>'.sprintf($ct_lang['ct_partner_link'], $ct_partner_id).'<br><br>';
+                }
+if (isset($ct_fill_field)) {
+$tpl->copy_template .= '<script language="javascript" type="text/javascript">
+$("#name").val("'.$name.'"); $("input[name$=\'email\']").val("'.$email.'");
+</script>';
+ }
+ 
+$ct_check_value = ct_generation_check_key();
+$_SESSION['ct_check_key'] = $ct_check_value;
+ 
+$tpl->copy_template .= "
+<script type=\"text/javascript\">
+// <![CDATA[
+document.getElementById(\"ct_checkjs\").value = document.getElementById(\"ct_checkjs\").value.replace('0', '{$ct_check_value}');
+// ]]>
+</script>";
+$_SESSION['ct_submit_register_time'] = time();
+}
+// End: cleantalk.ru
+
+
+
+Строку
+// Begin: cleantalk.ru
+require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
+list($ct_config, $ct_config_serialized) = ct_get_config($db);
+
+if ($ct_config['ct_enable_mod']) {
+$db->query( "INSERT INTO " . USERPREFIX . "_users (name, password, email, reg_date, lastdate, user_group, info, signature, favorites, xfields, logged_ip, ct_request_id) VALUES ('$name', '$regpassword', '$email', '$add_time', '$add_time', '" . $config['reg_group'] . "', '', '', '', '', '" . $_IP . "', '".$ct_request_id."')" );
+} else {
+$db->query( "INSERT INTO " . USERPREFIX . "_users (name, password, email, reg_date, lastdate, user_group, info, signature, favorites, xfields, logged_ip) VALUES ('$name', '$regpassword', '$email', '$add_time', '$add_time', '" . $config['reg_group'] . "', '', '', '', '', '" . $_IP . "')" );
+}
+// End: cleantalk.ru
+
+
+Заменить на
+$db->query( "INSERT INTO " . USERPREFIX . "_users (name, password, email, reg_date, lastdate, user_group, info, signature, favorites, xfields, logged_ip) VALUES ('$name', '$regpassword', '$email', '$add_time', '$add_time', '" . $config['reg_group'] . "', '', '', '', '', '" . $_IP . "')" );
+
+
+
+
+
+
+
+
+***** Редактировать файл - engine/modules/show.full.php
+
+После
+if( $allow_comments AND $news_found) {
+
+Удалить строки
+// Begin: cleantalk.ru
+$config['allow_cmod'] = true;
+// End: cleantalk.ru
+
+
+
+Строки
+// Begin: cleantalk.ru
+$tpl->copy_template = "<form  method=\"post\" name=\"dle-comments-form\" id=\"dle-comments-form\" action=\"{$_SESSION['referrer']}\">" . $tpl->copy_template . "
+<input type=\"hidden\" name=\"subaction\" value=\"addcomment\" />{$hidden}
+<input type=\"hidden\" name=\"post_id\" id=\"post_id\" value=\"$news_id\" />
+        <input type=\"hidden\" name=\"ct_checkjs\" id=\"ct_checkjs\" value=\"0\" />
+        </form>";
+        
+        require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
+
+        list($ct_config, $ct_config_serialized) = ct_get_config($db);
+        
+        if ($ct_config['ct_enable_mod']) {
+            
+            $ct_check_value = ct_generation_check_key();
+            $_SESSION['ct_check_key'] = $ct_check_value;
+
+            $tpl->copy_template .= "
+            <script type=\"text/javascript\">
+            // <![CDATA[
+            document.getElementById(\"ct_checkjs\").value = document.getElementById(\"ct_checkjs\").value.replace('0', '{$ct_check_value}');
+            // ]]>
+            </script>";
+
+            $tpl->copy_template .= "";
+            
+            $_SESSION['ct_submit_comment_time'] = time();
+
+            $ct_lang = get_ct_lang();
+            $ct_partner_id = (int)$ct_config['ct_partner_id'];
+            if ($ct_config['ct_show_partner_link'] == 1 && !empty($ct_partner_id)) {
+                $tpl->copy_template .= '<br>'.sprintf($ct_lang['ct_partner_link'],
+                        $ct_partner_id).'<br><br>';
+            }
+        }
+        // End: cleantalk.ru
+
+
+Заменить на:
+$tpl->copy_template = "<form  method=\"post\" name=\"dle-comments-form\" id=\"dle-comments-form\" action=\"{$_SESSION['referrer']}\">" . $tpl->copy_template . "
+		<input type=\"hidden\" name=\"subaction\" value=\"addcomment\" />{$hidden}
+		<input type=\"hidden\" name=\"post_id\" id=\"post_id\" value=\"$news_id\" /></form>";
+
+
+
+
+
+
+
+***** Редактировать файл - engine/modules/comments.php
+
+ВЫПОЛНИТЬ В ДВУХ МЕСТАХ:
+После
+$db->query( "DELETE FROM " . PREFIX . "_{$allowed_areas[$area]['comments_table']} WHERE id = '$id'" );
+
+Удалить строки
+// Begin: cleantalk.ru
+include ENGINE_DIR . '/modules/cleantalk/deletecomments.php';
+// End: cleantalk.ru
+
+
+
+
+
+
+
+***** Редактировать файл - engine/inc/cmoderation.php
+
+После
+$post_id = intval( $_POST['post_id'][$c_id] );
+
+Удалить строки
+// Begin: cleantalk.ru
+include ENGINE_DIR . '/modules/cleantalk/cmoderation1.php';
+// End: cleantalk.ru
+
+
+
+Перед
+$db->query( "DELETE FROM " . PREFIX . "_comments WHERE id='$c_id'" );
+
+Удалить строки
+// Begin: cleantalk.ru
+include ENGINE_DIR . '/modules/cleantalk/cmoderation2.php';
+// End: cleantalk.ru
+
+
+
+
+
+
+
+***** Редактировать файл - engine/inc/mass_user_actions.php
+
+Перед
+$row = $db->super_query( "SELECT user_id, user_group, name, foto FROM " . USERPREFIX . "_users WHERE user_id='$id'" );
+
+Удалить строки
+// Begin: cleantalk.ru
+include ENGINE_DIR . '/modules/cleantalk/mass_user_actions.php';
+// End: cleantalk.ru
+
+
+
+
+
+
+
+***** Редактировать файл - engine/inc/editusers.php
+
+После
+if( $id == 1 ) {
+	die( $lang['user_undel'] );
+}
+
+Удалить строки
+// Begin: cleantalk.ru
+include ENGINE_DIR . '/modules/cleantalk/editusers.php';
+// End: cleantalk.ru
+
+
+
+
+
+
+
+
+***** Редактировать файл - engine/inc/comments.php
+
+Перед
+$row = $db->super_query( "SELECT * FROM " . PREFIX . "_comments where id = '$c_id'" );
+
+Удалить строки
+// Begin: cleantalk.ru
+include ENGINE_DIR . '/modules/cleantalk/comments.php';
+// End: cleantalk.ru
+
+
+
+
+
+
+
+***** Редактировать файл - engine/ajax/editcomments.php
+
+После
+$comm_update = $db->safesql( $comm_txt );
+
+Удалить строки
+// Begin: cleantalk.ru
+include ENGINE_DIR . '/modules/cleantalk/editcomments.php';
+// End: cleantalk.ru
+
+
+
+
+
+
+
+***** Редактировать файл - engine/ajax/deletecomment.php
+
+После
+if( $have_perm ) {
+
+Удалить строки
+// Begin: cleantalk.ru
+require_once ENGINE_DIR . '/modules/cleantalk/deletecomments.php';
+// End: cleantalk.ru
+
+
+
+
+
+
+
+***** Редактировать файл - engine/classes/js/dle_js.js
+После
+"engine/ajax/addcomments.php",{
+
+Удалить строки (Никаких лишних пробелов и пустых строк)
+ct_checkjs:a.ct_checkjs.value,
+
+Проверка
+  было - "engine/ajax/addcomments.php",{ct_checkjs:a.ct_checkjs.value,post_id
+  стало - "engine/ajax/addcomments.php",{post_id
