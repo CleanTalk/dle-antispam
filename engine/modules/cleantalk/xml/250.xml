@@ -58,7 +58,7 @@ require_once ENGINE_DIR . '/modules/cleantalk/register.php';
         </operation>
         <operation>
             <search position="after"><![CDATA[
-if( $doaction != "validating" AND !$stopregistration ) {
+if( $doaction == "validating" AND !$stopregistration AND !$_POST['submit_val'] ) {
 			]]></search>
             <add><![CDATA[
 // Begin: cleantalk.ru
