@@ -122,7 +122,7 @@ if (in_array($member_id['user_group'], $ct_config['ct_groups']) && !$CN_HALT && 
                 }
             }
         } else {
-            if ($ct_result->blacklisted == 1) {
+            if ($ct_result->stop_queue == 1) {
                 $stop[] = charset($ct_result->comment, $config['charset']);
                 $CN_HALT = TRUE;
             } else {
