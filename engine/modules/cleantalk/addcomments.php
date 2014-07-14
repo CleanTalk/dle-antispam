@@ -68,6 +68,11 @@ if (in_array($member_id['user_group'], $ct_config['ct_groups']) && !$CN_HALT && 
     $ct_text = charset_from($ct_text, $dle_config['charset']);
     $ct_mail = charset_from($mail, $config['charset']);
     $ct_name = charset_from($name, $config['charset']);
+    
+    // Decoding URL from [leech] bbcode
+    if (preg_match('/(.+href=")(.+\?url=)([a-z0-9\=]+)(".+)$/i', urldecode($ct_comments), $matches)) {
+        $ct_comments = $matches[1] . base64_decode($matches[3]) . $matches[4];  
+    }
 
     // The facility in which to store the query parameters
     $ct_request = new CleantalkRequest();

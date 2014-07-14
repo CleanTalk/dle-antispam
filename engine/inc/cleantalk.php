@@ -11,6 +11,10 @@ if (!defined('DATALIFEENGINE') OR !defined('LOGGED_IN')) {
 
 require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
 
+$admin_path = 'admin.php';
+if (isset($config['admin_path']) && $config['admin_path'] != '') {
+    $admin_path = $config['admin_path'];
+}
 
 if (file_exists(ROOT_DIR . '/language/' . $selected_language . '/cleantalk.lng')) {
     require_once (ROOT_DIR . '/language/' . $selected_language . '/cleantalk.lng');
@@ -44,8 +48,8 @@ function ct_echoheader($title, $image, $menu = 0) {
         <td style=\"padding:2px;\">
 <table width=\"100%\" height=\"35px\" style=\"text-align:center;\">
 <tbody><tr style=\"vertical-align:middle;\">
- </td><td class=\"tableborder\"><a href=\"admin.php?mod=cleantalk\"><img border=\"0\" src=\"engine/skins/images/cleantalk_m.png\" title=\"{$lang['ct_module_settings']}\"><br>{$lang['ct_module_settings']}</a></td>
-<td class=\"tableborder\"><a href=\"admin.php?mod=cleantalk_logs\"><img border=\"0\" src=\"engine/skins/images/cleantalk_logs_m.png\" title=\"{$lang['ct_logs_list']}\"><br>{$lang['ct_logs_list']}</a></td>
+ </td><td class=\"tableborder\"><a href=\"$admin_path?mod=cleantalk\"><img border=\"0\" src=\"engine/skins/images/cleantalk_m.png\" title=\"{$lang['ct_module_settings']}\"><br>{$lang['ct_module_settings']}</a></td>
+<td class=\"tableborder\"><a href=\"$admin_path?mod=cleantalk_logs\"><img border=\"0\" src=\"engine/skins/images/cleantalk_logs_m.png\" title=\"{$lang['ct_logs_list']}\"><br>{$lang['ct_logs_list']}</a></td>
 </tr>
 </tbody></table>
 </td>
@@ -220,7 +224,7 @@ HTML;
 
             echo <<<HTML
             <br />
-            <form method="POST" action="admin.php?mod=cleantalk">
+            <form method="POST" action="$admin_path?mod=cleantalk">
                     <center>
                     <h3>{$lang['ct_installed']}</h3>
 
@@ -271,7 +275,7 @@ if (isset($_POST['ct_uninstall'])) {
     $db->query("ALTER TABLE `" . PREFIX . "_comments` DROP `ct_request_id`");
 
     echo <<<HTML
-        <form method="POST" action="admin.php">
+        <form method="POST" action="$admin_path">
                 <center>
         {$lang['ct_uninstalled']}<br><br>
             <input type="submit" value="{$lang['ct_return_to_cp']}">
@@ -320,7 +324,7 @@ if (isset($_GET['update'])) {
 
     ct_echoheader($lang['ct_module_name'] . ' ' . $lang['ct_module_release'], "cleantalk");
     echo <<<HTML
-            <form method="POST" action="admin.php?mod=cleantalk">
+            <form method="POST" action="$admin_path?mod=cleantalk">
                     <center>
             {$lang['ct_update_success']}<br><br>
                 <input type="submit" value="{$lang['ct_install_next']}">
@@ -379,7 +383,7 @@ if (isset($_POST['ct_save'])) {
 <br>
 {$lang['opt_sysok_1']}
 <br><br>
-<a href="admin.php?mod=cleantalk">{$lang['func_msg']}</a>
+<a href="$admin_path?mod=cleantalk">{$lang['func_msg']}</a>
 <br><br>
 </center>
 HTML;
