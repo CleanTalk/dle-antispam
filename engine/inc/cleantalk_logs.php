@@ -28,6 +28,11 @@ if (file_exists(ROOT_DIR . '/language/' . $selected_language . '/cleantalk.lng')
     require_once (ROOT_DIR . '/language/' . $selected_language . '/cleantalk.lng');
 }
 
+$admin_path = '$admin_path';
+if (isset($config['admin_path']) && $config['admin_path'] != '') {
+    $admin_path = $config['admin_path'];
+}
+
 $start_from = intval( $_REQUEST['start_from'] );
 $news_per_page = 50;
 
@@ -126,8 +131,8 @@ $(function(){
         <td style="padding:2px;">
 <table width="100%" height="35px" style="text-align:center;">
 <tbody><tr style="vertical-align:middle;">
- </td><td class="tableborder"><a href="admin.php?mod=cleantalk"><img border="0" src="engine/skins/images/cleantalk_m.png" title="{$lang['ct_module_settings']}"><br>{$lang['ct_module_settings']}</a></td>
-<td class="tableborder"><a href="admin.php?mod=cleantalk_logs"><img border="0" src="engine/skins/images/cleantalk_logs_m.png" title="{$lang['ct_logs_list']}"><br>{$lang['ct_logs_list']}</a></td>
+ </td><td class="tableborder"><a href="$admin_path?mod=cleantalk"><img border="0" src="engine/skins/images/cleantalk_m.png" title="{$lang['ct_module_settings']}"><br>{$lang['ct_module_settings']}</a></td>
+<td class="tableborder"><a href="$admin_path?mod=cleantalk_logs"><img border="0" src="engine/skins/images/cleantalk_logs_m.png" title="{$lang['ct_logs_list']}"><br>{$lang['ct_logs_list']}</a></td>
 </tr>
 </tbody></table>
 </td>
