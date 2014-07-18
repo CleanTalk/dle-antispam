@@ -144,7 +144,9 @@ function feedback_admin($subject, $message) {
 }
 
 function ct_generation_check_key() {
-    return md5(rand(0, 1000));
+    global $config, $ct_config;
+
+    return md5($ct_config['ct_key'] . '+' . $config['admin_mail'] . '+' . date("d"));
 }
 
 ?>

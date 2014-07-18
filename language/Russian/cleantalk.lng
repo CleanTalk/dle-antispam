@@ -3,7 +3,7 @@
 $ct_lang = array (
 
 'ct_module_name'		=>	"CleanTalk. Spam protection",
-'ct_module_release'		=>	"2.50",
+'ct_module_release'		=>	"2.51",
 'ct_not_installed'		=>	"Ошибка установки модуля <b>CleanTalk</b>. Пожалуйста обратитесь за технической поддержкой на форум <a href=\"http://cleantalk.ru/forum\">cleantalk.ru</a>!",
 'ct_installed'		=>	"Модуль <b>CleanTalk</b> успешно установлен!",
 'ct_install_patches'		=>	"Модифкация файлов DLE",
