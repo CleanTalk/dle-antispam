@@ -1,7 +1,7 @@
 <modification>
 
     <id>CleanTalk for DLE</id>
-    <version>250</version>
+    <version>251</version>
     <vqmver>2.3.2</vqmver>
     <author>CleanTalk team</author>
 
@@ -317,6 +317,24 @@ require_once ENGINE_DIR . '/modules/cleantalk/feedback.php';
             <add><![CDATA[
 // Begin: cleantalk.ru
 require_once ENGINE_DIR . '/modules/cleantalk/feedback.php';
+// End: cleantalk.ru
+]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[$tpl->set_block( "'\\[not-logged\\](.*?)\\[/not-logged\\]'si", "" );]]></search>
+            <add><![CDATA[
+// Begin: cleantalk.ru
+require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
+list($ct_config, $ct_config_serialized) = ct_get_config($db);
+ 
+$ct_check_value = ct_generation_check_key();
+$tpl->copy_template .= "
+<input type=\"hidden\" name=\"ct_checkjs\" id=\"ct_checkjs\" value=\"0\" />
+
+<script type=\"text/javascript\">
+document.getElementById(\"ct_checkjs\").value = document.getElementById(\"ct_checkjs\").value.replace('0', '{$ct_check_value}');
+</script>";
+$_SESSION['ct_submit_register_time'] = time();
 // End: cleantalk.ru
 ]]></add>
         </operation>
