@@ -58,12 +58,6 @@ if (in_array($member_id['user_group'], $ct_config['ct_groups']) && !$CN_HALT && 
 
     $ct_submit_time = time() - $_SESSION['ct_submit_comment_time'];
 
-    if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-    {
-            $forwarded_for = (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) ? htmlentities($_SERVER['HTTP_X_FORWARDED_FOR']) : '';
-    }
-    $sender_ip = ($_IP == '127.0.0.1' && !empty($forwarded_for)) ? $forwarded_for : $_IP;
-    
     $ct_comments = charset_from($comments, $config['charset']);
     $ct_text = charset_from($ct_text, $dle_config['charset']);
     $ct_mail = charset_from($mail, $config['charset']);
@@ -74,7 +68,7 @@ if (in_array($member_id['user_group'], $ct_config['ct_groups']) && !$CN_HALT && 
         $ct_comments = $matches[1] . base64_decode($matches[3]) . $matches[4];  
     }
 
-    // The facility in which to store the query parameters
+    $ct = new Cleantalk();
     $ct_request = new CleantalkRequest();
 
     $ct_request->auth_key = $ct_config['ct_key'];
@@ -84,12 +78,11 @@ if (in_array($member_id['user_group'], $ct_config['ct_groups']) && !$CN_HALT && 
     $ct_request->example = $ct_text;
     $ct_request->agent = 'dle-'.$ct_config['ct_version'];
     $ct_request->sender_info = $sender_info;
-    $ct_request->sender_ip = $sender_ip;
+    $ct_request->sender_ip = $ct->ct_session_ip($_SERVER['REMOTE_ADDR']);
     $ct_request->post_info = $post_info;
     $ct_request->submit_time = $ct_submit_time;
     $ct_request->js_on = $checkjs;
 
-    $ct = new Cleantalk();
     $ct->work_url = $ct_config['ct_work_url'];
     $ct->server_url = $ct_config['ct_server_url'];
     $ct->server_ttl = $ct_config['ct_server_ttl'];

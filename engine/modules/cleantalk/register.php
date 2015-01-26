@@ -49,23 +49,18 @@ if (empty($reg_error) && $ct_config['ct_enable_mod']) {
     );
     $sender_info = json_encode($sender_info);
 
-    if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-    {
-            $forwarded_for = (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) ? htmlentities($_SERVER['HTTP_X_FORWARDED_FOR']) : '';
-    }
-    $sender_ip = ($_IP == '127.0.0.1' && !empty($forwarded_for)) ? $forwarded_for : $_IP;
-    
+    $ct = new Cleantalk();
     $ct_request = new CleantalkRequest();
+
     $ct_request->auth_key = $ct_config['ct_key'];
     $ct_request->sender_email = $email;
     $ct_request->sender_nickname = $name;
-    $ct_request->sender_ip = $sender_ip;
+    $ct_request->sender_ip = $ct->ct_session_ip($_SERVER['REMOTE_ADDR']);
     $ct_request->agent = 'dle-'.$ct_config['ct_version'];
     $ct_request->submit_time = $ct_submit_register_time;
     $ct_request->js_on = $checkjs;
     $ct_request->sender_info = $sender_info;
 
-    $ct = new Cleantalk();
     $ct->work_url = $ct_config['ct_work_url'];
     $ct->server_url = $ct_config['ct_server_url'];
     $ct->server_ttl = $ct_config['ct_server_ttl'];
