@@ -16,31 +16,6 @@ require_once ENGINE_DIR . '/modules/cleantalk/addcomments.php';
 // End: cleantalk.ru
 ]]></add>
         </operation>
-        <operation>
-            <search position="before"><![CDATA[
-			if( $is_logged ) $db->query( "INSERT INTO " . PREFIX . "_comments (post_id, user_id, date, autor, email, text, ip, is_register, approve) values ('$post_id', '$member_id[user_id]', '$time', '$name', '$mail', '$comments', '$_IP', '1', '$where_approve')" );
-            ]]></search>
-            <add><![CDATA[
-// Begin: cleantalk.ru
-require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
-list($ct_config, $ct_config_serialized) = ct_get_config($db);
-
-if ($ct_config['ct_enable_mod']) {
-if( $is_logged ) $db->query( "INSERT INTO " . PREFIX . "_comments (post_id, user_id, date, autor, email, text, ip, is_register, approve, ct_request_id) values ('$post_id', '$member_id[user_id]', '$time', '$name', '$mail', '$comments', '$_IP', '1', '$where_approve', '$ct_request_id')" );
-			else $db->query( "INSERT INTO " . PREFIX . "_comments (post_id, date, autor, email, text, ip, is_register, approve, ct_request_id) values ('$post_id', '$time', '$name', '$mail', '$comments', '$_IP', '0', '$where_approve', '$ct_request_id')" );
-} else {
-]]></add>
-        </operation>
-        <operation>
-            <search position="after"><![CDATA[
-			else $db->query( "INSERT INTO " . PREFIX . "_comments (post_id, date, autor, email, text, ip, is_register, approve) values ('$post_id', '$time', '$name', '$mail', '$comments', '$_IP', '0', '$where_approve')" );
-            ]]></search>
-            <add><![CDATA[
-}
-// End: cleantalk.ru
-]]>
-            </add>
-        </operation>
     </file>
     
     <file name="engine/modules/register.php">
@@ -113,30 +88,6 @@ $tpl->copy_template .= "
 document.getElementById(\"ct_checkjs\").value = document.getElementById(\"ct_checkjs\").value.replace('0', '{$ct_check_value}');
 </script>";
 $_SESSION['ct_submit_register_time'] = time();
-}
-// End: cleantalk.ru
-]]></add>
-        </operation>
-        
-        
-        <operation>
-            <search position="replace"><![CDATA[$db->query( "INSERT INTO " . USERPREFIX . "_users (name, password, email, reg_date, lastdate, user_group, info, signature, favorites, xfields, logged_ip) VALUES ('$name', '$regpassword', '$email', '$add_time', '$add_time', '" . $config['reg_group'] . "', '', '', '', '', '" . $_IP . "')" );]]></search>
-            <add><![CDATA[//$db->query( "INSERT INTO " . USERPREFIX . "_users (name, password, email, reg_date, lastdate, user_group, info, signature, favorites, xfields, logged_ip) VALUES ('$name', '$regpassword', '$email', '$add_time', '$add_time', '" . $config['reg_group'] . "', '', '', '', '', '" . $_IP . "')" );]]></add>
-        </operation>
-        
-        
-        <operation>
-            <search position="before"><![CDATA[
-			$id = $db->insert_id();
-]]></search>
-            <add><![CDATA[
-// Begin: cleantalk.ru
-require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
-list($ct_config, $ct_config_serialized) = ct_get_config($db);
-if ($ct_config['ct_enable_mod']) {
-$db->query( "INSERT INTO " . USERPREFIX . "_users (name, password, email, reg_date, lastdate, user_group, info, signature, favorites, xfields, logged_ip, ct_request_id) VALUES ('$name', '$regpassword', '$email', '$add_time', '$add_time', '" . $config['reg_group'] . "', '', '', '', '', '" . $_IP . "', '".$ct_request_id."')" );
-} else {
-$db->query( "INSERT INTO " . USERPREFIX . "_users (name, password, email, reg_date, lastdate, user_group, info, signature, favorites, xfields, logged_ip) VALUES ('$name', '$regpassword', '$email', '$add_time', '$add_time', '" . $config['reg_group'] . "', '', '', '', '', '" . $_IP . "')" );
 }
 // End: cleantalk.ru
 ]]></add>

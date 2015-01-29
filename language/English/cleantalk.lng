@@ -34,110 +34,15 @@ $ct_lang = array_merge($lang, array (
 'ct_please_enter_code'	=> 'Please, enter the code',
 'ct_enable_comments'	=> 'Checking comments',
 'ct_enable_feedback'	=> 'Checking feedback emails',
-'ct_logs_list'		=> 'CleanTalk logs',
 'ct_module_settings'	=> 'Module settings',
 'ct_module_logs_about'	=> "Logs of module CleanTalk. Spam protect, for the last 30 days",
-'ct_log_module_name'	=> "CleanTalk. Spam protect logs",
 'ct_partner_id'		=>	"Partner ID<br><a href=\"http://CleanTalk.org/partners\">Get my ID</a>",
 'ct_show_partner_link' => "Show partner link",
 'ct_partner_link' => '<a style="font-size: 12px; margin-left: 10px;" href="http://CleanTalk.org/dle?partner_id=%s" title="DLE module protection against spam." target="__blank">DLE module protection against spam</a>',
 'ct_enable_mod'	=> 'Module status',
 'ct_update_success' => 'Module <b>CleanTalk. Spam protect</b> updated. Thank you for use our services.',
-
-'ct_logs_action_1' => "Add a new newsletter:"
-'ct_logs_action_2' => "Add a new poll on the site:"
-'ct_logs_action_3' => "Edit this survey"
-'ct_logs_action_4' => "Add a new banner:"
-'ct_logs_action_5' => "Edit banner:"
-'ct_logs_action_6' => "Disable banner, ID:",
-'ct_logs_action_7' => "Enable banner, ID:",
-'ct_logs_action_8' => "Remove banner, ID:",
-'ct_logs_action_9' => "Add a filter to block users:",
-'ct_logs_action_10' => "Remove the filter blocking users."
-'ct_logs_action_11' => "Change sorting categories."
-'ct_logs_action_12' => "Add a category:",
-'ct_logs_action_13' => "Delete category, ID:",
-'ct_logs_action_14' => "Edit Categories",
-'ct_logs_action_15' => "Remove the news earlier in the wizard optimization",
-'ct_logs_action_16' => "Delete comments earlier in the wizard optimization",
-'ct_logs_action_17' => "Cleaning the personal messages in the wizard optimization."
-'ct_logs_action_18' => "Clear log Wizard optimization."
-'ct_logs_action_19' => "Moderation of comments."
-'ct_logs_action_20' => "Remove all comments in news, ID:",
-'ct_logs_action_21' => "Remove comments from the site."
-'ct_logs_action_22' => "Remove the complaint."
-'ct_logs_action_23' => "Optimization / Repair Database."
-'ct_logs_action_24' => "Create a backup of the database."
-'ct_logs_action_25' => "Edit News:"
-'ct_logs_action_26' => "Delete news:"
-'ct_logs_action_27' => "Remove the survey online, ID:",
-'ct_logs_action_28' => "Cleaning the election results for the survey ID:",
-'ct_logs_action_29' => "The suspension of the survey, ID:",
-'ct_logs_action_30' => "The inclusion of the survey, ID:",
-'ct_logs_action_31' => "Edit Templates E-mail messages."
-'ct_logs_action_32' => "Delete the downloaded images in news, ID:",
-'ct_logs_action_33' => "Delete the downloaded images and files to a static page, ID:",
-'ct_logs_action_34' => "Deleting downloaded files with news, ID:",
-'ct_logs_action_36' => "File Download",
-'ct_logs_action_37' => "Delete file:",
-'ct_logs_action_38' => "Create a site map."
-'ct_logs_action_39' => "Using the bulk edit static pages."
-'ct_logs_action_40' => "Use of mass removal of static pages."
-'ct_logs_action_41' => "Delete user",
-'ct_logs_action_42' => "Remove user comments with ID:",
-'ct_logs_action_43' => "Change the user group:"
-'ct_logs_action_44' => "User Admin",
-'ct_logs_action_45' => "Remove personal posts:"
-'ct_logs_action_46' => "Use of mass editing of news."
-'ct_logs_action_47' => "mass messages"
-'ct_logs_action_48' => "Changing the Script"
-'ct_logs_action_49' => "A possible evolution of publications"
-'ct_logs_action_50' => "Remove RSS channel, ID:",
-'ct_logs_action_51' => "Add RSS feed",
-'ct_logs_action_52' => "Edit RSS channel:"
-'ct_logs_action_53' => "Add RSS informer:"
-'ct_logs_action_54' => "Edit RSS informer:"
-'ct_logs_action_55' => "Disable RSS informer, ID:",
-'ct_logs_action_56' => "Enable RSS informer, ID:",
-'ct_logs_action_57' => "Remove RSS informer, ID:",
-'ct_logs_action_58' => "Search and replace on the database:"
-'ct_logs_action_59' => "Add a static page"
-'ct_logs_action_60' => "Edit the static page"
-'ct_logs_action_61' => "Remove from the tag cloud, tag:"
-'ct_logs_action_62' => "Edit tag cloud, tag:"
-'ct_logs_action_63' => "Add a new user:"
-'ct_logs_action_64' => "Edit User",
-'ct_logs_action_65' => "Delete user",
-'ct_logs_action_66' => "Change Language Pack Template"
-'ct_logs_action_67' => "Create a new template:",
-'ct_logs_action_68' => "Delete Template"
-'ct_logs_action_69' => "Create a template file:",
-'ct_logs_action_70' => "Edit the template file:",
-'ct_logs_action_71' => "Remove extra field for user profiles:",
-'ct_logs_action_72' => "Add / Edit custom field for user profiles:",
-'ct_logs_action_73' => "Remove extra field for the news:"
-'ct_logs_action_74' => "Add / Edit custom field for the news:"
-'ct_logs_action_75' => "Remove user groups, ID:",
-'ct_logs_action_76' => "Add a new user group:"
-'ct_logs_action_77' => "Edit User Group ',
-'ct_logs_action_78' => "Editing a video player."
-'ct_logs_action_79' => "Add a new word to filter the words:",
-'ct_logs_action_80' => "Delete the words from the filter."
-'ct_logs_action_81' => "Edit in the filter words, the words:"
-'ct_logs_action_82' => "Log in to Admin Panel website (enter your login and password)."
-'ct_logs_action_83' => "Edit question in the FAQ section:"
-'ct_logs_action_84' => "Add a question in the FAQ section:"
-'ct_logs_action_85' => "Delete issue in the FAQ section, ID:",
-'ct_logs_action_86' => "Log in to the administration panel site (authorization by kukam). Transition from the page:"
-// 9.4
-
-
 'ct_state'		=>	"State",
-
-
-
-
-
+'ct_control_panel'	=>	"Your control panel in CleanTalk",
 ));
 
 $ct_lang = charset($ct_lang, $config['charset']);

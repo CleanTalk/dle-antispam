@@ -29,39 +29,15 @@ function ct_echoheader($title, $image, $menu = 0) {
     if ($menu) {
         echo "<div style=\"padding-top:5px;padding-bottom:2px;\">
 <table width=\"100%\">
-    <tbody><tr>
-        <td width=\"4\"><img width=\"4\" border=\"0\" height=\"4\" src=\"engine/skins/images/tl_lo.gif\"></td>
-        <td background=\"engine/skins/images/tl_oo.gif\"><img width=\"1\" border=\"0\" height=\"4\" src=\"engine/skins/images/tl_oo.gif\"></td>
-        <td width=\"6\"><img width=\"6\" border=\"0\" height=\"4\" src=\"engine/skins/images/tl_ro.gif\"></td>
-    </tr>
+    <tbody>
     <tr>
-        <td background=\"engine/skins/images/tl_lb.gif\"><img width=\"4\" border=\"0\" height=\"1\" src=\"engine/skins/images/tl_lb.gif\"></td>
         <td bgcolor=\"#FFFFFF\" style=\"padding:5px;\">
-<table width=\"100%\">
+    <table width=\"100%\">
     <tbody><tr>
         <td bgcolor=\"#EFEFEF\" height=\"29\" style=\"padding-left:10px;\"><div class=\"navigation\">{$lang['ct_module_name']} {$lang['ct_module_release']}</div></td>
     </tr>
-</tbody></table>
-<div class=\"unterline\"></div>
-<table width=\"100%\">
-    <tbody><tr>
-        <td style=\"padding:2px;\">
-<table width=\"100%\" height=\"35px\" style=\"text-align:center;\">
-<tbody><tr style=\"vertical-align:middle;\">
- </td><td class=\"tableborder\"><a href=\"$admin_path?mod=cleantalk\"><img border=\"0\" src=\"engine/skins/images/cleantalk_m.png\" title=\"{$lang['ct_module_settings']}\"><br>{$lang['ct_module_settings']}</a></td>
-<td class=\"tableborder\"><a href=\"$admin_path?mod=cleantalk_logs\"><img border=\"0\" src=\"engine/skins/images/cleantalk_logs_m.png\" title=\"{$lang['ct_logs_list']}\"><br>{$lang['ct_logs_list']}</a></td>
-</tr>
-</tbody></table>
-</td>
-    </tr>
-</tbody></table>
-</td>
-        <td background=\"engine/skins/images/tl_rb.gif\"><img width=\"6\" border=\"0\" height=\"1\" src=\"engine/skins/images/tl_rb.gif\"></td>
-    </tr>
-    <tr>
-        <td><img width=\"4\" border=\"0\" height=\"6\" src=\"engine/skins/images/tl_lu.gif\"></td>
-        <td background=\"engine/skins/images/tl_ub.gif\"><img width=\"1\" border=\"0\" height=\"6\" src=\"engine/skins/images/tl_ub.gif\"></td>
-        <td><img width=\"6\" border=\"0\" height=\"6\" src=\"engine/skins/images/tl_ru.gif\"></td>
+    </tbody></table>
+	</td>
     </tr>
 </tbody></table>
 </div>";
@@ -69,12 +45,6 @@ function ct_echoheader($title, $image, $menu = 0) {
     echo '<div style="padding-top:5px;padding-bottom:2px;">
 <table width="100%">
     <tr>
-        <td width="4"><img src="engine/skins/images/tl_lo.gif" width="4" height="4" border="0"></td>
-        <td background="engine/skins/images/tl_oo.gif"><img src="engine/skins/images/tl_oo.gif" width="1" height="4" border="0"></td>
-        <td width="6"><img src="engine/skins/images/tl_ro.gif" width="6" height="4" border="0"></td>
-    </tr>
-    <tr>
-        <td background="engine/skins/images/tl_lb.gif"><img src="engine/skins/images/tl_lb.gif" width="4" height="1" border="0"></td>
         <td style="padding:5px;" bgcolor="#FFFFFF">
 <table width="100%">
     <tr>
@@ -87,12 +57,6 @@ function ct_echoheader($title, $image, $menu = 0) {
 
 function ct_echofooter() {
     echo '</td>
-        <td background="engine/skins/images/tl_rb.gif"><img src="engine/skins/images/tl_rb.gif" width="6" height="1" border="0"></td>
-    </tr>
-    <tr>
-        <td><img src="engine/skins/images/tl_lu.gif" width="4" height="6" border="0"></td>
-        <td background="engine/skins/images/tl_ub.gif"><img src="engine/skins/images/tl_ub.gif" width="1" height="6" border="0"></td>
-        <td><img src="engine/skins/images/tl_ru.gif" width="6" height="6" border="0"></td>
     </tr>
 </table>
 </div>';
@@ -139,11 +103,7 @@ if (!$ct_result['c']) {
 
         if ($vqmod->version_to_delete != null) {
             $dle_api->uninstall_admin_module('cleantalk');
-            $dle_api->uninstall_admin_module('cleantalk_logs');
             $db->query("DROP TABLE IF EXISTS  `" . PREFIX . "_ct_config`");
-            $db->query("DROP TABLE IF EXISTS  `" . PREFIX . "_ct_logs`");
-            $db->query("ALTER TABLE `" . PREFIX . "_users` DROP `ct_request_id`");
-            $db->query("ALTER TABLE `" . PREFIX . "_comments` DROP `ct_request_id`");
         }
         /**
          * @TODO
@@ -169,19 +129,8 @@ HTML;
             $installed_version = $vqmod->version_to_install;
 
             $dle_api->install_admin_module('cleantalk', $lang['ct_module_name'], $lang['ct_module_about'], 'cleantalk.png', '1');
-            $dle_api->install_admin_module('cleantalk_logs', $lang['ct_log_module_name'], $lang['ct_module_logs_about'], 'cleantalk_logs.png', '1');
 
             $ct_table_charset = ($config['charset'] == 'windows-1251') ? 'cp1251' : 'utf8';
-
-            $db->query("CREATE TABLE IF NOT EXISTS `" . PREFIX . "_ct_logs` (
-                    `id` int(11) NOT NULL AUTO_INCREMENT,
-                    `name` varchar(40) NOT NULL DEFAULT '',
-                    `date` int(11) unsigned NOT NULL DEFAULT '0',
-                    `ip` varchar(16) NOT NULL DEFAULT '',
-                    `action` int(11) NOT NULL DEFAULT '0',
-                    `extras` text NOT NULL,
-                    PRIMARY KEY (`id`)
-        ) ENGINE=MyISAM  DEFAULT CHARSET={$ct_table_charset};");
 
             $db->query("CREATE TABLE IF NOT EXISTS `" . PREFIX . "_ct_config` (
                     `key` varchar(32) NOT NULL,
@@ -219,8 +168,6 @@ HTML;
 			('ct_version', '{$installed_version}', '0'),
 			('ct_server_url', 'http://moderate.cleantalk.ru', '0')");
             }
-            $db->query("ALTER TABLE `" . PREFIX . "_users` ADD `ct_request_id` VARCHAR( 32 ) NOT NULL");
-            $db->query("ALTER TABLE `" . PREFIX . "_comments` ADD `ct_request_id` VARCHAR( 32 ) NOT NULL");
 
             echo <<<HTML
             <br />
@@ -268,11 +215,7 @@ if (isset($_POST['ct_uninstall'])) {
     
     ct_echoheader($lang['ct_module_name'] . ' ' . $lang['ct_module_release'], "cleantalk");
     $dle_api->uninstall_admin_module('cleantalk');
-    $dle_api->uninstall_admin_module('cleantalk_logs');
     $db->query("DROP TABLE IF EXISTS  `" . PREFIX . "_ct_config`");
-    $db->query("DROP TABLE IF EXISTS  `" . PREFIX . "_ct_logs`");
-    $db->query("ALTER TABLE `" . PREFIX . "_users` DROP `ct_request_id`");
-    $db->query("ALTER TABLE `" . PREFIX . "_comments` DROP `ct_request_id`");
 
     echo <<<HTML
         <form method="POST" action="$admin_path">
@@ -300,27 +243,13 @@ HTML;
 list($ct_config, $ct_config_serialized) = ct_get_config($db);
 
 if (isset($_GET['update'])) {
-    $dle_api->install_admin_module('cleantalk_logs', $lang['ct_log_module_name'], $lang['ct_module_logs_about'], 'cleantalk_logs.png', '1');
 
     $ct_table_charset = ($config['charset'] == 'windows-1251') ? 'cp1251' : 'utf8';
-
-    $db->query("CREATE TABLE IF NOT EXISTS `" . PREFIX . "_ct_logs` (
-                `id` int(11) NOT NULL AUTO_INCREMENT,
-                `name` varchar(40) NOT NULL DEFAULT '',
-                `date` int(11) unsigned NOT NULL DEFAULT '0',
-                `ip` varchar(16) NOT NULL DEFAULT '',
-                `action` int(11) NOT NULL DEFAULT '0',
-                `extras` text NOT NULL,
-                PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM  DEFAULT CHARSET={$ct_table_charset};");
 
     $db->query("INSERT IGNORE INTO `" . PREFIX . "_ct_config` (`key`, `value`, `serialized`) VALUES
             ('ct_partner_id', '', ''),
             ('ct_enable_mod', '1', '0'),
             ('ct_show_partner_link', '', '0')");
-
-    $db->query("ALTER TABLE `" . PREFIX . "_users` ADD `ct_request_id` VARCHAR( 32 ) NOT NULL");
-    $db->query("ALTER TABLE `" . PREFIX . "_comments` ADD `ct_request_id` VARCHAR( 32 ) NOT NULL");
 
     ct_echoheader($lang['ct_module_name'] . ' ' . $lang['ct_module_release'], "cleantalk");
     echo <<<HTML
@@ -460,6 +389,9 @@ echo <<<HTML
                     <td><input name="ct_partner_id" value="{$ct_config['ct_partner_id']}" >
                         <br><em style="color: grey;">{$lang['ct_partner_id_example']}</em></td>
                 </tr>
+                <tr>
+                    <td colspan="2" style="padding:6px; text-decoration:underline;"><br/><a target="_blank" href="https://cleantalk.org/my">{$lang['ct_control_panel']} &gt;&gt;&gt;</a></td>
+                </tr>
             </table>
         </td>
     </tr>
@@ -469,7 +401,7 @@ echo <<<HTML
 
 <form method="POST" action="" name="form_module_delete">
                     <input type="hidden" value="1" name="ct_uninstall">
-<br><br><div style="float: right; color: red; cursor: pointer;" onclick="if (confirm('{$lang['ct_uninstall_confirm']}')) { document.form_module_delete.submit(); } event.returnValue = false; return false;"><img src="pic/delete.png" border="0" style="vertical-align: middle;"> {$lang['ct_uninstall_button']}</div>
+<br><br><div style="float: right; color: red; cursor: pointer;" onclick="if (confirm('{$lang['ct_uninstall_confirm']}')) { document.form_module_delete.submit(); } event.returnValue = false; return false;"><img src="engine/skins/images/delete.png" border="0" style="vertical-align: middle;"> {$lang['ct_uninstall_button']}</div>
 </form>
 HTML;
 ct_echofooter();

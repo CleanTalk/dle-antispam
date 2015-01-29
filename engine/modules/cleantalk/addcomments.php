@@ -9,7 +9,6 @@ require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
 list($ct_config, $ct_config_serialized) = ct_get_config($db);
 
 $ct_lang = get_ct_lang();
-$ct_request_id = null;
 if (in_array($member_id['user_group'], $ct_config['ct_groups']) && !$CN_HALT && $ct_config['ct_enable_comments']
         && $ct_config['ct_enable_mod']) {
 
@@ -93,8 +92,6 @@ if (in_array($member_id['user_group'], $ct_config['ct_groups']) && !$CN_HALT && 
     $ct_result = $ct->isAllowMessage($ct_request);
     if ($ct_result->errno == 0) {
         
-        $ct_request_id = $ct_result->id;
-
         // If the server has changed, is changing the config
         if ($ct->server_change) {
             ct_set_config('ct_work_url', $ct->work_url);
@@ -134,12 +131,7 @@ if (in_array($member_id['user_group'], $ct_config['ct_groups']) && !$CN_HALT && 
             }
         }
 
-        $ct_log_extras = 'Username: ' . $ct_name . ', email: ' . $ct_mail . '. ' . charset($ct_result->comment, $config['charset']);
-        ct_log($ct_name, $_TIME, $_IP, 0, $ct_log_extras);
     } else {
-        $ct_log_extras = charset($ct_result->errstr, $config['charset']);
-        ct_log(null, $_TIME, $_IP, 0, $ct_log_extras);
-        
         feedback_admin($ct_config['ct_server_url'], $ct_result->errstr);
     }
 }

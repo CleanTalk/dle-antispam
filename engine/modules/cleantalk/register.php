@@ -6,8 +6,6 @@ if (!defined('DATALIFEENGINE')) {
 
 require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
 list($ct_config, $ct_config_serialized) = ct_get_config($db);
-
-$ct_request_id = null;
 if (empty($reg_error) && $ct_config['ct_enable_mod']) {
     require_once ENGINE_DIR . '/modules/cleantalk/cleantalk.class.php';
     require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
@@ -73,12 +71,8 @@ if (empty($reg_error) && $ct_config['ct_enable_mod']) {
         if ($ct_result->allow == 0) {
             $ct_fill_field = true;
             $reg_error .= charset($ct_result->comment, $config['charset']);
-
-            $ct_time = time() + ($config['date_adjust'] * 60);
-            $ct_log_extras = 'Username: ' . $name . ', email: ' . $email . '. ' . charset($ct_result->comment, $config['charset']);
-            ct_log(null, $ct_time, $_SERVER['REMOTE_ADDR'], 0, $ct_log_extras);
+	    $stopregistration = TRUE;
         }
-        $ct_request_id = $ct_result->id;
         // If the server has changed, is changing the config
         if ($ct->server_change) {
             ct_set_config('ct_work_url', $ct->work_url);
@@ -86,9 +80,6 @@ if (empty($reg_error) && $ct_config['ct_enable_mod']) {
             ct_set_config('ct_server_changed', time());
         }
     } else {
-        $ct_log_extras = charset($ct_result->errstr, $config['charset']);
-        ct_log(null, $_TIME, $_IP, 0, $ct_log_extras);
-        
         feedback_admin($ct_config['ct_server_url'], $ct_result->errstr);
     }
 }

@@ -122,15 +122,6 @@ function get_ct_lang() {
     return $lang;
 }
 
-function ct_log($name, $date, $ip, $action = 0, $extras) {
-    global $db;
-    $ct_if_exists_log = $db->super_query('show tables like "' . USERPREFIX . '_ct_logs"');
-    if (!empty($ct_if_exists_log)) {
-        $db->query("INSERT INTO " . USERPREFIX . "_ct_logs (name, date, ip, action, extras)
-            values ('" . $db->safesql($name) . "', '" . $db->safesql($date) . "', '" . $db->safesql($ip) . "', '" . $db->safesql($action) . "', '" . $db->safesql($extras) . "')");
-    }
-}
-
 function feedback_admin($subject, $message) {
     global $db, $config;
     $admins = $db->super_query("SELECT email FROM " . USERPREFIX . "_users WHERE user_group='1' AND allow_mail = '1'");

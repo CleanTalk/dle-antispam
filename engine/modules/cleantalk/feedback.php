@@ -79,10 +79,6 @@ if ($stop == '' && $ct_config['ct_enable_feedback']) {
 
             // Для совместимости с кодом DLE
             $stop = stripslashes($stop);
-
-            $ct_time = time() + ($config['date_adjust'] * 60);
-            $ct_log_extras = 'Username: ' . $name . ', email: ' . $email . '. ' . charset($ct_result->comment, $config['charset']);
-            ct_log(null, $ct_time, $_SERVER['REMOTE_ADDR'], 0, $ct_log_extras);
         }
         // If the server has changed, is changing the config
         if ($ct->server_change) {
@@ -91,9 +87,6 @@ if ($stop == '' && $ct_config['ct_enable_feedback']) {
             ct_set_config('ct_server_changed', time());
         }
     } else {
-        $ct_log_extras = charset($ct_result->errstr, $config['charset']);
-        ct_log(null, $_TIME, $_IP, 0, $ct_log_extras);
-        
         feedback_admin($ct_config['ct_server_url'], $ct_result->errstr);
     }
 }
