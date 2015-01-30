@@ -377,7 +377,9 @@ echo <<<HTML
         <td width="50%" valign="top">
         <table width="100%">
                 <tr>
-                    <td style="padding:6px;">{$lang['ct_key']}</td>
+HTML;
+echo "                    <td style=\"padding:6px;\">{$lang['ct_key1']}<br/><a style=\"text-decoration:underline;\" target=\"_blank\" href=\"https://cleantalk.org/register?platform=dle&email=".urlencode($config['admin_mail'])."&website=".urlencode(parse_url($config['http_home_url'],PHP_URL_HOST))."\">{$lang['ct_key2']} &gt;&gt;&gt;</a></td>";
+echo <<<HTML
                     <td><input name="ct_key" value="{$ct_config['ct_key']}" ></td>
                 </tr>
                 <tr>
@@ -387,10 +389,10 @@ echo <<<HTML
                 <tr>
                     <td style="padding:6px;">{$lang['ct_partner_id']}</td>
                     <td><input name="ct_partner_id" value="{$ct_config['ct_partner_id']}" >
-                        <br><em style="color: grey;">{$lang['ct_partner_id_example']}</em></td>
+                        <br><em style="color:grey;">{$lang['ct_partner_id_example']}</em></td>
                 </tr>
                 <tr>
-                    <td colspan="2" style="padding:6px; text-decoration:underline;"><br/><a target="_blank" href="https://cleantalk.org/my">{$lang['ct_control_panel']} &gt;&gt;&gt;</a></td>
+                    <td colspan="2" style="padding:6px;"><br/><a style="text-decoration:underline;" target="_blank" href="https://cleantalk.org/my">{$lang['ct_control_panel']} &gt;&gt;&gt;</a></td>
                 </tr>
             </table>
         </td>

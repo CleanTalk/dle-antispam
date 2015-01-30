@@ -1,7 +1,7 @@
 <modification>
 
     <id>CleanTalk for DLE</id>
-    <version>251</version>
+    <version>300</version>
     <vqmver>2.3.2</vqmver>
     <author>CleanTalk team</author>
 
@@ -25,9 +25,7 @@ require_once ENGINE_DIR . '/modules/cleantalk/addcomments.php';
 			]]></search>
             <add><![CDATA[
 // Begin: cleantalk.ru
-if($config['registration_type'] == 0) {
 require_once ENGINE_DIR . '/modules/cleantalk/register.php';
-}
 // End: cleantalk.ru
 ]]></add>
         </operation>

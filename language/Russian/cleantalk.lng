@@ -3,7 +3,7 @@
 $ct_lang = array (
 
 'ct_module_name'		=>	"CleanTalk. Spam protection",
-'ct_module_release'		=>	"2.51",
+'ct_module_release'		=>	"3.0",
 'ct_not_installed'		=>	"Ошибка установки модуля <b>CleanTalk</b>. Пожалуйста обратитесь за технической поддержкой на форум <a href=\"http://cleantalk.ru/forum\">cleantalk.ru</a>!",
 'ct_installed'		=>	"Модуль <b>CleanTalk</b> успешно установлен!",
 'ct_install_patches'		=>	"Модифкация файлов DLE",
@@ -23,7 +23,8 @@ $ct_lang = array (
 'ct_groups_all'		=>	"- Все -",
 	'ct_stop_words'		=>	"Проверка по стоп-словам<br><em style=\"color: grey;\">Описание опции смотрите на <a href=\"http://CleanTalk.ru/about#stoplist\" target=\"_blank\">сайте разработчика</a>.</em>",
 'ct_links'		=>	"Разрешать ссылки",
-'ct_key'		=>	"Ключ доступа<br><a href=\"https://CleanTalk.ru/install/dle?step=2\">Кликните, чтобы получить ключ</a>",
+'ct_key1'		=>	"Ключ доступа",
+'ct_key2'		=>	"Кликните, чтобы получить ключ",
 'ct_server_url'		=>	"URL сервера",
 'ct_language'		=>	"Язык системных сообщений<br><em style=\"color: grey;\">На выбранном языке модуль будет выдавать поясняющую информацию посетителям  и модераторам сайта.</em>",
 'ct_save_button'		=>	"Сохранить",
@@ -37,7 +38,7 @@ $ct_lang = array (
 'ct_enable_feedback'	=> 'Проверка сообщений формы обратной связи',
 'ct_module_settings'	=> 'Настройки модуля',
 'ct_module_logs_about'		=>	"Список всех действий, выполненных модулем CleanTalk. Spam protection, за последние 30 дней.",
-'ct_partner_id'		=>	"Партнерский ID<br><a href=\"http://CleanTalk.ru/partners\">Получить мой ID</a>",
+'ct_partner_id'		=>	"Партнерский ID<br><a style=\"text-decoration:underline;\" target=\"_blank\" href=\"http://CleanTalk.ru/partners\">Получить мой ID &gt;&gt;&gt;</a>",
 	'ct_partner_id_example'				=> "Пример: 321911",
 'ct_show_partner_link' => "Показывать партнерскую ссылку",
 'ct_partner_link' => '<a style="font-size: 12px; margin-left: 10px;" href="http://CleanTalk.ru/dle?partner_id=%s" title="Модуль защиты DLE от спама." target="__blank">Модуль защиты DLE от спама</a>',

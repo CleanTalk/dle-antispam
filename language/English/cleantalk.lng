@@ -2,7 +2,7 @@
 
 $ct_lang = array_merge($lang, array (
 'ct_module_name'		=>	"CleanTalk. Spam protect",
-'ct_module_release'		=>	"2.51",
+'ct_module_release'		=>	"3.0",
 'ct_not_installed'		=>	"Module <b>CleanTalk</b> not installed. Please email to welcome@cleantalk.ru.",
 'ct_installed'		=>	"Now you can configure the module <b>CleanTalk</b>. Thank you for choosing us.",
 'ct_install_button'		=>	"Install",
@@ -22,7 +22,8 @@ $ct_lang = array_merge($lang, array (
 'ct_groups_all'		=>	"- All -",
 'ct_stop_words'		=>	"Stop words checking",
 'ct_links'		=>	"Allow links",
-'ct_key'		=>	"Access key<br><a href=\"https://CleanTalk.ru/install/dle?step=2\">Click here to get key</a>",
+'ct_key1'		=>	"Access key",
+'ct_key2'		=>	"Click here to get key",
 'ct_server_url'		=>	"CleanTalk server URL",
 'ct_language'		=>	"System messages language<br><em style=\"color: grey;\">In the selected language module will give explanatory information to visitors and moderators</em>",
 'ct_save_button'		=>	"Save",
@@ -36,7 +37,7 @@ $ct_lang = array_merge($lang, array (
 'ct_enable_feedback'	=> 'Checking feedback emails',
 'ct_module_settings'	=> 'Module settings',
 'ct_module_logs_about'	=> "Logs of module CleanTalk. Spam protect, for the last 30 days",
-'ct_partner_id'		=>	"Partner ID<br><a href=\"http://CleanTalk.org/partners\">Get my ID</a>",
+'ct_partner_id'		=>	"Partner ID<br><a style=\"text-decoration:underline;\" target=\"_blank\" href=\"http://CleanTalk.org/partners\">Get my ID &gt;&gt;&gt;</a>",
 'ct_show_partner_link' => "Show partner link",
 'ct_partner_link' => '<a style="font-size: 12px; margin-left: 10px;" href="http://CleanTalk.org/dle?partner_id=%s" title="DLE module protection against spam." target="__blank">DLE module protection against spam</a>',
 'ct_enable_mod'	=> 'Module status',
