@@ -17,12 +17,67 @@ require_once ENGINE_DIR . '/modules/cleantalk/addcomments.php';
 ]]></add>
         </operation>
     </file>
-    
+
+    <file name="engine/modules/addnews.php">
+        <operation>
+            <search position="before"><![CDATA[
+if( $stop ) {
+]]></search>
+            <add><![CDATA[
+// Begin: cleantalk.ru
+require_once ENGINE_DIR . '/modules/cleantalk/addnews.php';
+// End: cleantalk.ru
+]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[
+$script .= "<form method=\"post\" name=\"entryform\" id=\"entryform\" onsubmit=\"if(checkxf()=='fail') return false;\" action=\"\">";
+]]></search>
+            <add><![CDATA[
+// Begin: cleantalk.ru
+$script .= "<input type=\"hidden\" name=\"ct_checkjs\" id=\"ct_checkjs\" value=\"0\" />";
+// End: cleantalk.ru
+]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[
+$tpl->copy_template = $categoryfilter . $script . $tpl->copy_template . "<input type=\"hidden\" name=\"mod\" value=\"addnews\" /></form>";
+]]></search>
+            <add><![CDATA[
+	// Begin: cleantalk.ru
+        require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
+
+        list($ct_config, $ct_config_serialized) = ct_get_config($db);
+        
+        if ($ct_config['ct_enable_mod']) {
+            
+            $ct_check_value = ct_generation_check_key();
+            $_SESSION['ct_check_key'] = $ct_check_value;
+
+            $tpl->copy_template .= "
+            <script type=\"text/javascript\">
+            document.getElementById(\"ct_checkjs\").value = document.getElementById(\"ct_checkjs\").value.replace('0', '{$ct_check_value}');
+            </script>";
+
+            $_SESSION['ct_submit_comment_time'] = time();
+
+            $ct_lang = get_ct_lang();
+            $ct_partner_id = (int)$ct_config['ct_partner_id'];
+            if ($ct_config['ct_show_partner_link'] == 1 && !empty($ct_partner_id)) {
+                $tpl->copy_template .= '<br>'.sprintf($ct_lang['ct_partner_link'],
+                        $ct_partner_id).'<br><br>';
+            }
+        }
+        // End: cleantalk.ru
+]]></add>
+        </operation>
+    </file>
+
     <file name="engine/modules/register.php">
         <operation>
             <search position="after"><![CDATA[
-			$reg_error = check_reg( $name, $email, $password1, $password2, $sec_code, $sec_code_session );
-			]]></search>
+$reg_error = check_reg( $name, $email, $password1, $password2, $sec_code, $sec_code_session );
+]]></search>
             <add><![CDATA[
 // Begin: cleantalk.ru
 require_once ENGINE_DIR . '/modules/cleantalk/register.php';
@@ -32,7 +87,7 @@ require_once ENGINE_DIR . '/modules/cleantalk/register.php';
         <operation>
             <search position="after"><![CDATA[
 if( $doaction == "validating" AND !$stopregistration AND !$_POST['submit_val'] ) {
-			]]></search>
+]]></search>
             <add><![CDATA[
 // Begin: cleantalk.ru
 require_once ENGINE_DIR . '/modules/cleantalk/register_validating.php';
@@ -41,8 +96,8 @@ require_once ENGINE_DIR . '/modules/cleantalk/register_validating.php';
         </operation>
         <operation>
             <search position="after"><![CDATA[
-			$reg_error = check_reg( $name, $email, $regpassword, $regpassword );
-			]]></search>
+$reg_error = check_reg( $name, $email, $regpassword, $regpassword );
+]]></search>
             <add><![CDATA[
 // Begin: cleantalk.ru
 if($_REQUEST['step'] == 2 or $config['registration_type'] == 0)  {
@@ -53,15 +108,15 @@ if($_REQUEST['step'] == 2 or $config['registration_type'] == 0)  {
         </operation>
         <operation>
             <search position="after"><![CDATA[
-			<input name=\"submit_reg\" type=\"hidden\" id=\"submit_reg\" value=\"submit_reg\" />
-			]]></search>
+<input name=\"submit_reg\" type=\"hidden\" id=\"submit_reg\" value=\"submit_reg\" />
+]]></search>
             <add><![CDATA[
 <input type=\"hidden\" name=\"ct_checkjs\" id=\"ct_checkjs\" value=\"0\" />
 ]]></add>
         </operation>
         <operation>
             <search position="before"><![CDATA[
-		$tpl->copy_template .= <<<HTML]]></search>
+$tpl->copy_template .= <<<HTML]]></search>
             <add><![CDATA[
 // Begin: cleantalk.ru
 require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
@@ -102,7 +157,9 @@ $config['allow_cmod'] = true;
 ]]></add>
         </operation>
         <operation>
-            <search position="before"><![CDATA[		$tpl->copy_template = "<form  method=\"post\" name=\"dle-comments-form\" id=\"dle-comments-form\" action=\"{$_SESSION['referrer']}\">" . $tpl->copy_template . "]]></search>
+            <search position="before"><![CDATA[
+$tpl->copy_template = "<form  method=\"post\" name=\"dle-comments-form\" id=\"dle-comments-form\" action=\"{$_SESSION['referrer']}\">" . $tpl->copy_template . "
+]]></search>
             <add><![CDATA[
                 // Begin: cleantalk.ru
                 $hidden .= "<input type=\"hidden\" name=\"ct_checkjs\" id=\"ct_checkjs\" value=\"0\" />";
@@ -110,7 +167,9 @@ $config['allow_cmod'] = true;
 			]]></add>
         </operation>
         <operation>
-            <search position="before"><![CDATA[		if (!isset($path['path'])) $path['path'] = "/";]]></search>
+            <search position="before"><![CDATA[
+if (!isset($path['path'])) $path['path'] = "/";
+]]></search>
             <add><![CDATA[
         // Begin: cleantalk.ru
         require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
@@ -144,15 +203,71 @@ $config['allow_cmod'] = true;
         </operation>
     </file>
 
+
+    <file name="engine/inc/cmoderation.php">
+        <operation>
+            <search position="after"><![CDATA[
+$post_id = intval( $_POST['post_id'][$c_id] );
+]]></search>
+            <add><![CDATA[
+                // Begin: cleantalk.ru
+include ENGINE_DIR . '/modules/cleantalk/cmoderation.php';
+// End: cleantalk.ru
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="engine/inc/editnews.php">
+        <operation>
+            <search position="after"><![CDATA[
+$newdate = $_POST['newdate'];
+]]></search>
+            <add><![CDATA[
+// Begin: cleantalk.ru
+include ENGINE_DIR . '/modules/cleantalk/editnews.php';
+// End: cleantalk.ru
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="engine/ajax/editnews.php">
+        <operation>
+            <search position="after"><![CDATA[
+if ($parse->not_allowed_text ) die( $lang['news_err_39'] );
+]]></search>
+            <add><![CDATA[
+// Begin: cleantalk.ru
+include ENGINE_DIR . '/modules/cleantalk/editnews_aj.php';
+// End: cleantalk.ru
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="engine/ajax/editcomments.php">
+        <operation>
+            <search position="after"><![CDATA[
+$comm_update = $db->safesql( $comm_txt );
+]]></search>
+            <add><![CDATA[
+// Begin: cleantalk.ru
+include ENGINE_DIR . '/modules/cleantalk/editcomments.php';
+// End: cleantalk.ru
+			]]></add>
+        </operation>
+    </file>
+
     <file name="engine/classes/js/dle_js.js">
         <operation>
             <search position="replace"><![CDATA[post_id.value]]></search>
             <add><![CDATA[post_id.value,ct_checkjs:document.getElementById("dle-comments-form").ct_checkjs.value]]></add>
         </operation>
     </file>
+
     <file name="engine/ajax/feedback.php">
         <operation>
-            <search position="before"><![CDATA[if( $stop ) {]]></search>
+            <search position="before"><![CDATA[
+if( $stop ) {
+]]></search>
             <add><![CDATA[
 // Begin: cleantalk.ru
 require_once ENGINE_DIR . '/modules/cleantalk/feedback.php';
@@ -160,9 +275,12 @@ require_once ENGINE_DIR . '/modules/cleantalk/feedback.php';
 ]]></add>
         </operation>
     </file>
+
     <file name="engine/modules/feedback.php">
         <operation>
-            <search position="before"><![CDATA[		if( $stop ) {]]></search>
+            <search position="before"><![CDATA[
+if( $stop ) {
+]]></search>
             <add><![CDATA[
 // Begin: cleantalk.ru
 require_once ENGINE_DIR . '/modules/cleantalk/feedback.php';
@@ -188,4 +306,5 @@ $_SESSION['ct_submit_register_time'] = time();
 ]]></add>
         </operation>
     </file>
+
  </modification>
