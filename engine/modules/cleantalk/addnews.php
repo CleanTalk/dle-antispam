@@ -9,7 +9,7 @@ require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
 list($ct_config, $ct_config_serialized) = ct_get_config($db);
 
 $ct_lang = get_ct_lang();
-if ($ct_config['ct_enable_mod'] && $ct_config['ct_enable_comments']) {
+if ($ct_config['ct_enable_mod'] && $ct_config['ct_enable_news']) {
 
     $ct_post_checkjs = $parse->process(htmlspecialchars(trim($_POST['ct_checkjs'])));
 

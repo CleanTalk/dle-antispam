@@ -144,6 +144,7 @@ HTML;
 			('ct_groups', '" . serialize($ct_config[0]['ct_groups']) . "', '1'),
 			('ct_enable_feedback', '" . $ct_config[0]['ct_enable_feedback'] . "', '0'),
 			('ct_enable_comments', '" . $ct_config[0]['ct_enable_comments'] . "', '0'),
+			('ct_enable_news', '" . $ct_config[0]['ct_enable_news'] . "', '0'),
 			('ct_key', '" . $ct_config[0]['ct_key'] . "', '0'),
 			('ct_partner_id', '" . $ct_config[0]['ct_partner_id'] . "', '0'),
 			('ct_enable_mod', '" . $ct_config[0]['ct_enable_mod'] . "', '0'),
@@ -158,6 +159,7 @@ HTML;
 			('ct_groups', 'a:1:{i:0;s:1:\"5\";}', '1'),
 			('ct_enable_feedback', '1', '0'),
 			('ct_enable_comments', '1', '0'),
+			('ct_enable_news', '1', '0'),
 			('ct_key', '', '0'),
 			('ct_partner_id', '', ''),
 			('ct_enable_mod', '1', '0'),
@@ -269,6 +271,7 @@ HTML;
 if (isset($_POST['ct_save'])) {
     $ct_request = array();
     $ct_request['ct_enable_feedback'] = (in_array(intval($_POST['ct_enable_feedback']), array(0, 1))) ? intval($_POST['ct_enable_feedback']) : false;
+    $ct_request['ct_enable_news'] = (in_array(intval($_POST['ct_enable_news']), array(0, 1))) ? intval($_POST['ct_enable_news']) : false;
     $ct_request['ct_enable_comments'] = (in_array(intval($_POST['ct_enable_comments']), array(0, 1))) ? intval($_POST['ct_enable_comments']) : false;
     $ct_request['ct_stop_words'] = (in_array(intval($_POST['ct_stop_words']), array(0, 1))) ? intval($_POST['ct_stop_words']) : false;
     $ct_request['ct_enable_mod'] = (in_array(intval($_POST['ct_enable_mod']), array(0, 1))) ? intval($_POST['ct_enable_mod']) : false;
@@ -335,6 +338,9 @@ $ct_options_enable_comments = ct_options_form(
 $ct_options_enable_feedback = ct_options_form(
         array(0 => $lang['ct_off'], 1 => $lang['ct_on']), $ct_config['ct_enable_feedback']
 );
+$ct_options_enable_news = ct_options_form(
+        array(0 => $lang['ct_off'], 1 => $lang['ct_on']), $ct_config['ct_enable_news']
+);
 
 ct_echoheader($lang['ct_module_settings'], "cleantalk", 1);
 $ct_checked_1 = ($ct_config['ct_show_partner_link'] == 1) ? ' checked' : '';
@@ -365,6 +371,11 @@ echo <<<HTML
                     <td style="padding:6px;">{$lang['ct_enable_feedback']}</td>
                     <td><select name="ct_enable_feedback">
                     {$ct_options_enable_feedback}</select></td>
+                </tr>
+                <tr>
+                    <td style="padding:6px;">{$lang['ct_enable_news']}</td>
+                    <td><select name="ct_enable_news">
+                    {$ct_options_enable_news}</select></td>
                 </tr>
                 <tr>
                     <td width="220" style="padding:6px;">{$lang['ct_groups']}</td>

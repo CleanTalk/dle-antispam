@@ -40,8 +40,8 @@ $script .= "<input type=\"hidden\" name=\"ct_checkjs\" id=\"ct_checkjs\" value=\
 ]]></add>
         </operation>
         <operation>
-            <search position="after"><![CDATA[
-$tpl->copy_template = $categoryfilter . $script . $tpl->copy_template . "<input type=\"hidden\" name=\"mod\" value=\"addnews\" /></form>";
+            <search position="before"><![CDATA[
+$tpl->compile( 'content' );
 ]]></search>
             <add><![CDATA[
 	// Begin: cleantalk.ru

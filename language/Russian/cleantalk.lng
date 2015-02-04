@@ -36,6 +36,7 @@ $ct_lang = array (
 'ct_please_enter_code'	=> 'Пожалуйста введите код',
 'ct_enable_comments'	=> 'Проверка комментариев',
 'ct_enable_feedback'	=> 'Проверка сообщений формы обратной связи',
+'ct_enable_news'	=> 'Проверка новостей',
 'ct_module_settings'	=> 'Настройки модуля',
 'ct_module_logs_about'		=>	"Список всех действий, выполненных модулем CleanTalk. Spam protection, за последние 30 дней.",
 'ct_partner_id'		=>	"Партнерский ID<br><a style=\"text-decoration:underline;\" target=\"_blank\" href=\"http://CleanTalk.ru/partners\">Получить мой ID &gt;&gt;&gt;</a>",
