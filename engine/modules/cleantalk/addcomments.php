@@ -57,11 +57,7 @@ if (in_array($member_id['user_group'], $ct_config['ct_groups']) && !$CN_HALT && 
 
     $ct_submit_time = time() - $_SESSION['ct_submit_comment_time'];
 
-    $ct_comments = charset_from($comments, $config['charset']);
-    $ct_text = charset_from($ct_text, $dle_config['charset']);
-    $ct_mail = charset_from($mail, $config['charset']);
-    $ct_name = charset_from($name, $config['charset']);
-    
+    $ct_comments = $comments;
     // Decoding URL from [leech] bbcode
     if (preg_match('/(.+href=")(.+\?url=)([a-z0-9\=]+)(".+)$/i', urldecode($ct_comments), $matches)) {
         $ct_comments = $matches[1] . base64_decode($matches[3]) . $matches[4];  
@@ -72,9 +68,9 @@ if (in_array($member_id['user_group'], $ct_config['ct_groups']) && !$CN_HALT && 
 
     $ct_request->auth_key = $ct_config['ct_key'];
     $ct_request->message = $ct_comments;
-    $ct_request->sender_email = $ct_mail;
-    $ct_request->sender_nickname = $ct_name;
-    $ct_request->example = $ct_text;
+    $ct_request->sender_email = $mail;
+    $ct_request->sender_nickname = $name;
+    $ct_request->example = $text;
     $ct_request->agent = 'dle-'.$ct_config['ct_version'];
     $ct_request->sender_info = $sender_info;
     $ct_request->sender_ip = $ct->ct_session_ip($_SERVER['REMOTE_ADDR']);
@@ -118,11 +114,11 @@ if (in_array($member_id['user_group'], $ct_config['ct_groups']) && !$CN_HALT && 
             }
         } else {
             if ($ct_result->stop_queue == 1) {
-                $stop[] = charset($ct_result->comment, $config['charset']);
+                $stop[] = $ct_result->comment;
                 $CN_HALT = TRUE;
             } else {
                 $config['allow_cmod'] = $user_group[$member_id['user_group']]['allow_modc'] = true;
-                $comments = $ct->addCleantalkComment(charset($ct_comments, $config['charset']), charset($ct_result->comment, $config['charset']));
+                $comments = $ct->addCleantalkComment($comments, $ct_result->comment);
 
                 /**
                  * Disable combine

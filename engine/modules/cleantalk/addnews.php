@@ -45,19 +45,13 @@ if ($ct_config['ct_enable_mod'] && $ct_config['ct_enable_news']) {
 
     $ct_submit_time = time() - $_SESSION['ct_submit_comment_time'];
 
-    $ct_title = charset_from($title, $config['charset']);
-    $ct_short_story = charset_from($short_story, $config['charset']);
-    $ct_full_story = charset_from($full_story, $config['charset']);
-    $ct_mail = charset_from($member_id['email'], $config['charset']);
-    $ct_name = charset_from($member_id['name'], $config['charset']);
-
     $ct = new Cleantalk();
     $ct_request = new CleantalkRequest();
 
     $ct_request->auth_key = $ct_config['ct_key'];
-    $ct_request->message = $ct_title . "\n\n" . $ct_short_story . "\n\n" . $ct_full_story;
-    $ct_request->sender_email = $ct_mail;
-    $ct_request->sender_nickname = $ct_name;
+    $ct_request->message = $title . "\n\n" . $short_story . "\n\n" . $full_story;
+    $ct_request->sender_email = $member_id['email'];
+    $ct_request->sender_nickname = $member_id['name'];
     $ct_request->example = NULL;
     $ct_request->agent = 'dle-'.$ct_config['ct_version'];
     $ct_request->sender_info = $sender_info;
@@ -85,9 +79,9 @@ if ($ct_config['ct_enable_mod'] && $ct_config['ct_enable_news']) {
 
         if ($ct_result->allow == 0) {
             if ($ct_result->stop_queue == 1) {
-		$stop .= "<li>" . charset($ct_result->comment, $config['charset']) . "</li>";
+		$stop .= "<li>" . $ct_result->comment . "</li>";
             } else {
-                $short_story = $ct->addCleantalkComment(charset($ct_short_story, $config['charset']), charset($ct_result->comment, $config['charset']));
+                $short_story = $ct->addCleantalkComment($short_story, $ct_result->comment);
 		if( ! $user_group[$member_id['user_group']]['moderation'] ) {
 			$approve = 0; // To manual moderation anyway
 		}

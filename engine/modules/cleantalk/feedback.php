@@ -63,7 +63,7 @@ if ($stop == '' && $ct_config['ct_enable_feedback']) {
 
     // Принудительно отключаем проверку стоп-слов, т.к. сообщения с формы обратной связи не являются публичной информацией
     $ct_request->stoplist_check = 0;
- 
+
     $ct = new Cleantalk();
     $ct->work_url = $ct_config['ct_work_url'];
     $ct->server_url = $ct_config['ct_server_url'];
@@ -75,10 +75,7 @@ if ($stop == '' && $ct_config['ct_enable_feedback']) {
 
     if ($ct_result->errno == 0) {
       if ($ct_result->allow == 0 && $ct_result->stop_queue == 1) {
-            $stop = charset(addslashes($ct_result->comment), $config['charset']);
-
-            // Для совместимости с кодом DLE
-            $stop = stripslashes($stop);
+	    $stop = $ct_result->comment;
         }
         // If the server has changed, is changing the config
         if ($ct->server_change) {

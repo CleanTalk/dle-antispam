@@ -24,9 +24,6 @@ if (empty($reg_error) && $ct_config['ct_enable_mod']) {
         $checkjs = 0;
     }
 
-    $email = charset_from($email, $config['charset']);
-    $username = charset_from($username, $config['charset']);
-
     $refferrer = null;
     if (isset($_SERVER['HTTP_REFERER'])) {
         $refferrer = htmlspecialchars((string) $_SERVER['HTTP_REFERER']);
@@ -70,7 +67,7 @@ if (empty($reg_error) && $ct_config['ct_enable_mod']) {
     if ($ct_result->errno == 0) {
         if ($ct_result->allow == 0) {
             $ct_fill_field = true;
-            $reg_error .= charset($ct_result->comment, $config['charset']);
+            $reg_error .= $ct_result->comment;
 	    $stopregistration = TRUE;
         }
         // If the server has changed, is changing the config
