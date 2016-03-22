@@ -166,41 +166,6 @@ $tpl->copy_template = "<form  method=\"post\" name=\"dle-comments-form\" id=\"dl
                 // End: cleantalk.ru
 			]]></add>
         </operation>
-        <operation>
-            <search position="before"><![CDATA[
-if (!isset($path['path'])) $path['path'] = "/";
-]]></search>
-            <add><![CDATA[
-        // Begin: cleantalk.ru
-        require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
-
-        list($ct_config, $ct_config_serialized) = ct_get_config($db);
-        
-        if ($ct_config['ct_enable_mod']) {
-            
-            $ct_check_value = ct_generation_check_key();
-            $_SESSION['ct_check_key'] = $ct_check_value;
-
-            $tpl->copy_template .= "
-            <script type=\"text/javascript\">
-            document.getElementById(\"ct_checkjs\").value = document.getElementById(\"ct_checkjs\").value.replace('0', '{$ct_check_value}');
-            </script>";
-
-            $tpl->copy_template .= "";
-            
-            $_SESSION['ct_submit_comment_time'] = time();
-
-            $ct_lang = get_ct_lang();
-            $ct_partner_id = (int)$ct_config['ct_partner_id'];
-            if ($ct_config['ct_show_partner_link'] == 1 && !empty($ct_partner_id)) {
-                $tpl->copy_template .= '<br>'.sprintf($ct_lang['ct_partner_link'],
-                        $ct_partner_id).'<br><br>';
-            }
-        }
-        // End: cleantalk.ru
-
-			]]></add>
-        </operation>
     </file>
 
 
