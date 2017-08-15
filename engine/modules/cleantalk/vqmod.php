@@ -164,6 +164,8 @@ final class VQMod {
             }
             if ($this->work_status == 1) {
                 foreach ($this->_mods as $modObject) {
+                  error_log(print_r($modObject->version,true));
+                                    error_log(print_r($this->version_to_install,true));
                     if ($modObject->version == $this->version_to_install) {
                         foreach ($modObject->mods as $path => $mods) {
                             $this->addMod($modObject, $path, $mods);
@@ -210,7 +212,6 @@ final class VQMod {
         } else {
             Error::add("File {$path} not pached!");
         }
-
         $this->_filesModded[$sourcePath] = array('cached' => $changed);
         $this->fileModding = false;
         return $changed ? true : false;
@@ -331,7 +332,6 @@ final class VQMod {
         $a = strrpos($name, '/') + 1;
         $b = strlen($name) - strrpos($name, '.') - 1;
         $version = substr($name, $a, $b);
-
         return $version;
     }
 
@@ -355,7 +355,6 @@ final class VQMod {
     private function _getMods() {
 
         $list = glob($this->path('engine/modules/cleantalk/xml/', true) . '*.xml');
-
         /* if(($pos=strrpos($this->_name,'.'))!==false)
           return (string)substr($this->_name,$pos+1);
           else
@@ -363,15 +362,11 @@ final class VQMod {
 
         $this->_modFileList = $this->_setVersionInKey($list);
         arsort($this->_modFileList);
-
-
         $max_version = array_shift($this->_modFileList);
-
         $this->_modFileList = $this->_setVersionInKey($list);
 
         //_d(array_shift($this->_modFileList), 1);
         // Проверка установленной версии
-
         if ($this->installed_version == null) {
             $this->version_to_install = $this->_getVersion($max_version);
             $this->work_status = 1;
@@ -425,7 +420,6 @@ final class VQMod {
           return;
           }
           } */
-
         if ($this->_modFileList) {
             $this->_parseMods();
         } else {
@@ -739,7 +733,6 @@ class VQModObject {
             }
 
             $indexCount = 0;
-
             $tmp = $this->_explodeData($tmp);
             $lineMax = count($tmp) - 1;
 
