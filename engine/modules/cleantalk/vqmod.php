@@ -91,7 +91,7 @@ final class VQMod {
                 if ($modObject->version == $this->version_to_delete) {
                     foreach ($modObject->mods as $path => $mods) {
                         if (!is_writable($path)) {
-                            Error::add("File: {$path} permission is not 0757");
+                            VQError::add("File: {$path} permission is not 0757");
                         }
                     }
                 }
@@ -104,7 +104,7 @@ final class VQMod {
                 if ($modObject->version == $this->version_to_install) {
                     foreach ($modObject->mods as $path => $mods) {
                         if (!is_writable($path)) {
-                            Error::add("File: {$path} permission is not 0757");
+                            VQError::add("File: {$path} permission is not 0757");
                         }
                     }
                 }
@@ -117,7 +117,7 @@ final class VQMod {
         $this->work_status = 2;
 
         $this->_checkPermissions();
-        $errors = Error::$errors;
+        $errors = VQError::$errors;
         if (!empty($errors)) {
             $this->errors = implode("<br>", $errors);
             return false;
@@ -130,7 +130,7 @@ final class VQMod {
                 }
             }
 
-            $errors = Error::$errors;
+            $errors = VQError::$errors;
             if (!empty($errors)) {
                 $this->errors = implode("<br>", $errors);
                 return false;
@@ -144,7 +144,7 @@ final class VQMod {
 
     public function run() {
         $this->_checkPermissions();
-        $errors = Error::$errors;
+        $errors = VQError::$errors;
 
         if (!empty($errors)) {
             $this->errors = implode("<br>", $errors);
@@ -173,7 +173,7 @@ final class VQMod {
                     }
                 }
 
-                $errors = Error::$errors;
+                $errors = VQError::$errors;
                 if (!empty($errors)) {
                     $this->errors = implode("<br>", $errors);
                     return false;
@@ -210,7 +210,7 @@ final class VQMod {
                $this->patched_files[] = $path; 
             }
         } else {
-            Error::add("File {$path} not pached!");
+            VQError::add("File {$path} not pached!");
         }
         $this->_filesModded[$sourcePath] = array('cached' => $changed);
         $this->fileModding = false;
@@ -377,7 +377,7 @@ final class VQMod {
             $this->version_to_delete = $this->installed_version;
             $this->work_status = 2;
             if (!isset($this->_modFileList[$this->installed_version])) {
-                Error::add('NOT HAVE FILE: ' . $this->installed_version . '.xml');
+                VQError::add('NOT HAVE FILE: ' . $this->installed_version . '.xml');
             } else {
                 //$this->_modFileList = array($max_version);
                 $this->version_to_install = $this->_getVersion($max_version);
@@ -385,7 +385,7 @@ final class VQMod {
         } else {
             //TODO: Вывод сообщения об отсутствии версии для установки
             if ($this->remove == false) {
-                Error::add('NOT INSTALLED VERSION');
+                VQError::add('NOT INSTALLED VERSION');
             }
         }
 
@@ -1085,7 +1085,7 @@ class VQModObject {
                         if ($error == 'log' || $error == 'abort') {
                             $skip = ($error == 'log') ? ' (SKIPPED)' : ' (ABORTING MOD)';
                             $this->_vqmod->log->write('Could not resolve path for [' . $fileToMod . ']' . $skip, $this);
-                            Error::add('Could not resolve path for [' . $fileToMod . ']');
+                            VQError::add('Could not resolve path for [' . $fileToMod . ']');
                         }
 
                         if ($error == 'log' || $error == 'skip') {
@@ -1228,7 +1228,7 @@ class VQAddNode extends VQNode {
     
 }
 
-class Error {
+class VQError {
 
     static public $errors;
 
