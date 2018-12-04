@@ -2,7 +2,7 @@
 
 $ct_lang = array_merge($lang, array (
 'ct_module_name'		=>	"CleanTalk. Spam protect",
-'ct_module_release'		=>	"3.02",
+'ct_module_release'		=>	"3.03",
 'ct_not_installed'		=>	"Module <b>CleanTalk</b> not installed. Please email to welcome@cleantalk.ru.",
 'ct_installed'		=>	"Now you can configure the module <b>CleanTalk</b>. Thank you for choosing us.",
 'ct_install_button'		=>	"Install",
