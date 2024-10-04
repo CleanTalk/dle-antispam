@@ -153,7 +153,7 @@ HTML;
 			('ct_server_ttl', '" . $ct_config[0]['ct_server_ttl'] . "', '0'),
 			('ct_server_changed', '" . $ct_config[0]['ct_server_changed'] . "', '0'),
 			('ct_version', '{$installed_version}', '0'),
-			('ct_server_url', 'http://moderate.cleantalk.ru', '0')");
+			('ct_server_url', 'https://moderate.cleantalk.org', '0')");
             } else {
                 $db->query("INSERT IGNORE INTO `" . PREFIX . "_ct_config` (`key`, `value`, `serialized`) VALUES
 			('ct_groups', 'a:1:{i:0;s:1:\"5\";}', '1'),
@@ -168,7 +168,7 @@ HTML;
 			('ct_server_ttl', '', '0'),
 			('ct_server_changed', '', '0'),
 			('ct_version', '{$installed_version}', '0'),
-			('ct_server_url', 'http://moderate.cleantalk.ru', '0')");
+			('ct_server_url', 'https://moderate.cleantalk.org', '0')");
             }
 
             echo <<<HTML
@@ -389,7 +389,8 @@ echo <<<HTML
         <table width="100%">
                 <tr>
 HTML;
-echo "                    <td style=\"padding:6px;\">{$lang['ct_key1']}<br/><a style=\"text-decoration:underline;\" target=\"_blank\" href=\"https://cleantalk.org/register?platform=dle&email=".urlencode($config['admin_mail'])."&website=".urlencode(parse_url($config['http_home_url'],PHP_URL_HOST))."\">{$lang['ct_key2']} &gt;&gt;&gt;</a></td>";
+echo "                    <td style=\"padding:6px;\">{$lang['ct_key1']}<br/><a style=\"text-decoration:underline;\" target=\"_blank\" href=\"https://cleantalk.org/register?platform=dle&email=".urlencode($config['admin_mail'])."&website=".urlencode(parse_url($config['http_home_url'],PHP_URL_HOST))."\">{$lang['ct_key2']} &gt;&gt;&gt;</a></td>
+";
 echo <<<HTML
                     <td><input name="ct_key" value="{$ct_config['ct_key']}" ></td>
                 </tr>

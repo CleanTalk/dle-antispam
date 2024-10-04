@@ -18,14 +18,14 @@
 $_SESSION['sec_code_session'] = 0;
 
 Удалить строки
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 require_once ENGINE_DIR . '/modules/cleantalk/addcomments.php';
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 
 Строки
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
 list($ct_config, $ct_config_serialized) = ct_get_config($db);
 
@@ -36,7 +36,7 @@ if( $is_logged ) $db->query( "INSERT INTO " . PREFIX . "_comments (post_id, user
 if( $is_logged ) $db->query( "INSERT INTO " . PREFIX . "_comments (post_id, user_id, date, autor, email, text, ip, is_register, approve) values ('$post_id', '$member_id[user_id]', '$time', '$name', '$mail', '$comments', '$_IP', '1', '$where_approve')" );
 			else $db->query( "INSERT INTO " . PREFIX . "_comments (post_id, date, autor, email, text, ip, is_register, approve) values ('$post_id', '$time', '$name', '$mail', '$comments', '$_IP', '0', '$where_approve')" );
 }
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 Заменить на
@@ -56,9 +56,9 @@ if( $is_logged ) $db->query( "INSERT INTO " . PREFIX . "_comments (post_id, user
 $reg_error = check_reg( $name, $email, $password1, $password2, $sec_code, $sec_code_session );
 
 Удалить строки
-// Begin: cleantalk.ru
+// Begin cleantalk.org
 require_once ENGINE_DIR . '/modules/cleantalk/register.php';
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 
@@ -66,9 +66,9 @@ require_once ENGINE_DIR . '/modules/cleantalk/register.php';
 if( $doaction == "validating" AND !$stopregistration AND !$_POST['submit_val'] ) {
 
 Удалить строки
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 require_once ENGINE_DIR . '/modules/cleantalk/register_validating.php';
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 
@@ -76,9 +76,9 @@ require_once ENGINE_DIR . '/modules/cleantalk/register_validating.php';
 $reg_error = check_reg( $name, $email, $regpassword, $regpassword );
 
 Добавить
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 require_once ENGINE_DIR . '/modules/cleantalk/register.php';
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 
@@ -97,7 +97,7 @@ $tpl->copy_template .= <<<HTML
 function reload () {
 
 Удалить строки
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
 $ct_lang = get_ct_lang();
 list($ct_config, $ct_config_serialized) = ct_get_config($db);
@@ -123,12 +123,12 @@ document.getElementById(\"ct_checkjs\").value = document.getElementById(\"ct_che
 </script>";
 $_SESSION['ct_submit_register_time'] = time();
 }
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 
 Строку
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 require_once ENGINE_DIR . '/modules/cleantalk/ct_functions.php';
 list($ct_config, $ct_config_serialized) = ct_get_config($db);
 
@@ -137,7 +137,7 @@ $db->query( "INSERT INTO " . USERPREFIX . "_users (name, password, email, reg_da
 } else {
 $db->query( "INSERT INTO " . USERPREFIX . "_users (name, password, email, reg_date, lastdate, user_group, info, signature, favorites, xfields, logged_ip) VALUES ('$name', '$regpassword', '$email', '$add_time', '$add_time', '" . $config['reg_group'] . "', '', '', '', '', '" . $_IP . "')" );
 }
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 Заменить на
@@ -156,14 +156,14 @@ $db->query( "INSERT INTO " . USERPREFIX . "_users (name, password, email, reg_da
 if( $allow_comments AND $news_found) {
 
 Удалить строки
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 $config['allow_cmod'] = true;
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 
 Строки
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 $tpl->copy_template = "<form  method=\"post\" name=\"dle-comments-form\" id=\"dle-comments-form\" action=\"{$_SESSION['referrer']}\">" . $tpl->copy_template . "
 <input type=\"hidden\" name=\"subaction\" value=\"addcomment\" />{$hidden}
 <input type=\"hidden\" name=\"post_id\" id=\"post_id\" value=\"$news_id\" />
@@ -197,7 +197,7 @@ $tpl->copy_template = "<form  method=\"post\" name=\"dle-comments-form\" id=\"dl
                         $ct_partner_id).'<br><br>';
             }
         }
-        // End: cleantalk.ru
+        // End: cleantalk.org
 
 
 Заменить на:
@@ -218,9 +218,9 @@ $tpl->copy_template = "<form  method=\"post\" name=\"dle-comments-form\" id=\"dl
 $db->query( "DELETE FROM " . PREFIX . "_{$allowed_areas[$area]['comments_table']} WHERE id = '$id'" );
 
 Удалить строки
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 include ENGINE_DIR . '/modules/cleantalk/deletecomments.php';
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 
@@ -234,9 +234,9 @@ include ENGINE_DIR . '/modules/cleantalk/deletecomments.php';
 $post_id = intval( $_POST['post_id'][$c_id] );
 
 Удалить строки
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 include ENGINE_DIR . '/modules/cleantalk/cmoderation1.php';
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 
@@ -244,9 +244,9 @@ include ENGINE_DIR . '/modules/cleantalk/cmoderation1.php';
 $db->query( "DELETE FROM " . PREFIX . "_comments WHERE id='$c_id'" );
 
 Удалить строки
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 include ENGINE_DIR . '/modules/cleantalk/cmoderation2.php';
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 
@@ -260,9 +260,9 @@ include ENGINE_DIR . '/modules/cleantalk/cmoderation2.php';
 $row = $db->super_query( "SELECT user_id, user_group, name, foto FROM " . USERPREFIX . "_users WHERE user_id='$id'" );
 
 Удалить строки
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 include ENGINE_DIR . '/modules/cleantalk/mass_user_actions.php';
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 
@@ -278,9 +278,9 @@ if( $id == 1 ) {
 }
 
 Удалить строки
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 include ENGINE_DIR . '/modules/cleantalk/editusers.php';
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 
@@ -295,9 +295,9 @@ include ENGINE_DIR . '/modules/cleantalk/editusers.php';
 $row = $db->super_query( "SELECT * FROM " . PREFIX . "_comments where id = '$c_id'" );
 
 Удалить строки
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 include ENGINE_DIR . '/modules/cleantalk/comments.php';
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 
@@ -311,9 +311,9 @@ include ENGINE_DIR . '/modules/cleantalk/comments.php';
 $comm_update = $db->safesql( $comm_txt );
 
 Удалить строки
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 include ENGINE_DIR . '/modules/cleantalk/editcomments.php';
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 
@@ -327,9 +327,9 @@ include ENGINE_DIR . '/modules/cleantalk/editcomments.php';
 if( $have_perm ) {
 
 Удалить строки
-// Begin: cleantalk.ru
+// Begin: cleantalk.org
 require_once ENGINE_DIR . '/modules/cleantalk/deletecomments.php';
-// End: cleantalk.ru
+// End: cleantalk.org
 
 
 
