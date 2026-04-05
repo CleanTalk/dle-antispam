@@ -1,5 +1,8 @@
 # dle-antispam
 DataLife Engine anti-spam extension.
+
+If you find this project useful, please consider starring ⭐ it on GitHub — it helps us grow and support development!
+
 # Version 3.03
 
 Anti-spam mod for DataLife Engine (DLE)
